@@ -2,14 +2,14 @@ import aws from 'aws-sdk';
 
 export default async (req, res) => {
   aws.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    region: process.env.AWS_REGION,
+    accessKeyId: process.env.PCS_AWS_ACCESS_KEY,
+    secretAccessKey: process.env.PCS_AWS_SECRET_KEY,
+    region: process.env.PCS_AWS_REGION,
     signatureVersion: 'v4',
   });
 
   const params = {
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.PCS_AWS_BUCKET_NAME,
     Key: req.query.fileName,
     Body: req.body
   };

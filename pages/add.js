@@ -15,8 +15,9 @@ const add = () => {
     const formData = new FormData();
     formData.append("file", file)
 
+    console.log(process.env.NEXT_PUBLIC_API_URL)
     try {
-      const res  = await fetch(`/api/uploadSnippetToS3?fileName=${filename}`, {
+      const res  = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/uploadSnippetToS3?fileName=${filename}`, {
         method: 'POST',
         body: formData,
       });
