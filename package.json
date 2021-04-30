@@ -8,11 +8,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "aws-sdk": "^2.896.0",
     "bootstrap": "^5.0.0-beta3",
+    "formidable": "^1.2.2",
     "next": "^10.2.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
+    "react-hook-form": "^7.3.6",
     "sass": "^1.32.12"
   }
 }
