@@ -10,14 +10,14 @@ const add = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
   const uploadCodeSnippetToS3ReturnUrl = async file => {
-    const filename = encodeURIComponent(file.name);
+    const filename = encodeURIComponent(file.name)
 
-    const formData = new FormData();
+    const formData = new FormData()
     formData.append("file", file)
 
-    console.log(process.env.NEXT_PUBLIC_API_URL)
     try {
-      const res  = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/uploadSnippetToS3?fileName=${filename}`, {
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/uploadSnippetToS3?fileName=${filename}`
+      const res  = await fetch(url, {
         method: 'POST',
         body: formData,
       });

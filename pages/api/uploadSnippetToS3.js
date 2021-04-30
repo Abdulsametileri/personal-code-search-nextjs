@@ -7,7 +7,7 @@ export default async (req, res) => {
     region: process.env.PCS_AWS_REGION,
     signatureVersion: 'v4',
   });
-
+  console.log(process.env.PCS_AWS_ACCESS_KEY)
   const params = {
     Bucket: process.env.PCS_AWS_BUCKET_NAME,
     Key: req.query.fileName,
