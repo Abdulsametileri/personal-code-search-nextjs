@@ -7,8 +7,10 @@ import CustomTextArea from "@/components/CustomTextArea";
 import {AddCodeSnippetToDb, UploadCodeImageToS3} from "@/api/codeSnippet";
 import {ShowErrorMessage, ShowSuccessMessage} from "@/utils/messageBox";
 import ActionButton from "@/components/ActionButton";
+import { useRouter } from 'next/router'
 
 const add = () => {
+  const router = useRouter()
   const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm();
 
   const onSubmit = async data => {
@@ -25,8 +27,9 @@ const add = () => {
 
     const success = await AddCodeSnippetToDb(postData)
     if (success) {
-      reset()
       ShowSuccessMessage('Code snippet has been added successfully. 👊')
+      reset()
+      await router.replace('/')
     } else {
       ShowErrorMessage('Error occuring when trying to attempt add the code snippet to database. 😭')
     }
