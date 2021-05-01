@@ -7,9 +7,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import Head from 'next/head'
+import Spacer from "@/components/Spacer";
 
 Router.events.on('routeChangeStart', (url) => {
-  console.log(`Loading: ${url}`)
   NProgress.start()
 })
 Router.events.on('routeChangeComplete', () => NProgress.done())
@@ -26,12 +26,16 @@ const LayoutComponent = ({ children }) => {
       </Head>
 
       <Nav />
+
       <ToastContainer />
+
       <main>
         <Container className={styles.mainContainer}>
           {children}
         </Container>
       </main>
+
+      <Spacer bottomVal={100} />
     </>
   )
 }

@@ -1,0 +1,13 @@
+.searchContainer {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+
+  .debounceInput {
+    padding-left: 10px;
+    width: 50%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
+  }
+}

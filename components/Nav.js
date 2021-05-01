@@ -10,7 +10,7 @@ const NavComponent = () => {
       <Navbar.Collapse className="justify-content-center" id="basic-navbar-nav">
         <Nav>
           <Link href="/">
-            Search Code Snippets
+            Query Code Snippets
           </Link>
           &nbsp; | &nbsp;
           <Link href="/add">

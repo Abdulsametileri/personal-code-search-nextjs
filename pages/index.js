@@ -1,22 +1,28 @@
 import dbConnect from "@/utils/dbConnect";
 import Code from "@/models/Code";
+import React from "react";
+import indexStyles from '@/styles/Index.module.scss'
+import DebounceSearch from "@/components/DebounceSearch";
+import SnippetList from "@/components/SnippetList";
+import Spacer from "@/components/Spacer";
 
-const Index = ({ snippets }) => {
+const Index = ({snippets}) => {
   return (
     <>
-      {snippets.map((snippet) => (
-        <div key={snippet._id}>
-          {snippet.tag} <br/>
-          {snippet.description} <br/>
-          {snippet.imageUrl}
-          <br/>
-          <br/>
-          <br/>
-          <div className="card">
-            <img src={snippet.imageUrl} />
-          </div>
-        </div>
-      ))}
+      <div className={indexStyles.searchContainer}>
+        <DebounceSearch
+          className={indexStyles.debounceInput}
+          onChange={event => console.log(event.target.value)}
+        />
+      </div>
+
+      <Spacer bottomVal={25}/>
+
+      {
+        snippets.length == 0
+          ? 'There is no code snippet to show.'
+          : <SnippetList snippets={snippets}/>
+      }
     </>
   )
 }
@@ -30,7 +36,7 @@ export async function getServerSideProps() {
     snippet._id = snippet._id.toString()
     return snippet
   })
-  return { props: { snippets } }
+  return {props: {snippets}}
 }
 
 export default Index
