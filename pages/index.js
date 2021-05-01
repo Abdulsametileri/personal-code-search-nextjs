@@ -10,7 +10,6 @@ import {connectToDatabase} from "@/utils/mongodb";
 const Index = ({isConnected, snippets}) => {
   return (
     <>
-
       {isConnected ? (
         <h2 className="subtitle">You are connected to MongoDB</h2>
       ) : (
