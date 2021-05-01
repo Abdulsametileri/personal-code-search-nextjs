@@ -1,4 +1,3 @@
-import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import styles from '../styles/Add.module.scss'
 import Spacer from "../components/Spacer";
@@ -6,11 +5,11 @@ import {useForm} from "react-hook-form";
 import CustomFileInput from "../components/CustomFileInput";
 import CustomTextArea from "../components/CustomTextArea";
 import {AddCodeSnippetToDb, UploadCodeImageToS3} from "../api/codeSnippet";
-import { toast } from 'react-toastify';
 import {ShowErrorMessage, ShowSuccessMessage} from "../utils/messageBox";
+import ActionButton from "../components/ActionButton";
 
 const add = () => {
-  const {register, handleSubmit, reset, formState: {errors}} = useForm();
+  const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm();
 
   const onSubmit = async data => {
     const imageS3Url = await UploadCodeImageToS3(data.image[0]) // await uploadCodeSnippetToS3ReturnUrl(data.image[0])
@@ -73,9 +72,10 @@ const add = () => {
       <Spacer bottomVal={10} topVal={10}/>
 
       <div className={styles.buttonContainer}>
-        <Button variant="success" type="submit">
-          Add
-        </Button>
+        <ActionButton
+          disabledState={isSubmitting}
+          buttonText="Add"
+        />
       </div>
     </Form>
   )
