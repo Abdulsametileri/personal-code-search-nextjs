@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "NODE_OPTIONS='--http-server-default-timeout=0' next start"
   },
   "dependencies": {
     "aws-sdk": "^2.896.0",
