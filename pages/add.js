@@ -6,6 +6,8 @@ import {useForm} from "react-hook-form";
 import CustomFileInput from "../components/CustomFileInput";
 import CustomTextArea from "../components/CustomTextArea";
 import {AddCodeSnippetToDb, UploadCodeImageToS3} from "../api/codeSnippet";
+import { toast } from 'react-toastify';
+import {ShowErrorMessage, ShowSuccessMessage} from "../utils/messageBox";
 
 const add = () => {
   const {register, handleSubmit, reset, formState: {errors}} = useForm();
@@ -13,21 +15,21 @@ const add = () => {
   const onSubmit = async data => {
     const imageS3Url = await UploadCodeImageToS3(data.image[0]) // await uploadCodeSnippetToS3ReturnUrl(data.image[0])
     if (imageS3Url === "") {
-      alert('Error occuring during upload the image to s3')
+      ShowErrorMessage('Error occuring during upload the image to s3.')
       return
     }
 
     const postData = {
       ...data,
-      imageUrl: imageS3Url,
+      imageUrl: imageS3Url
     }
 
     const success = await AddCodeSnippetToDb(postData)
     if (success) {
       reset()
-      alert('Uploaded successfully')
+      ShowSuccessMessage('Code snippet has been added successfully. 👊')
     } else {
-      alert('Error occuring when trying to attemp add the code snippet')
+      ShowErrorMessage('Error occuring when trying to attempt add the code snippet to database. 😭')
     }
   };
 
