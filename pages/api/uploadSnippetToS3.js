@@ -7,7 +7,7 @@ export default async (req, res) => {
     region: process.env.PCS_AWS_REGION,
     signatureVersion: 'v4',
   });
-  console.log(process.env.PCS_AWS_ACCESS_KEY)
+
   const params = {
     Bucket: process.env.PCS_AWS_BUCKET_NAME,
     Key: req.query.fileName,
@@ -16,10 +16,14 @@ export default async (req, res) => {
 
   const s3 = new aws.S3();
 
-  const data = await s3.upload(params).promise()
-  const { Location: imageUrl } = data
+  try {
+    const data = await s3.upload(params).promise()
+    const { Location: imageUrl } = data
 
-  res.json({
-    imageUrl: imageUrl
-  })
+    res.status(201).json({
+      imageUrl: imageUrl
+    })
+  } catch (e) {
+    res.status(400).json({ imageUrl: "" })
+  }
 }
