@@ -1,16 +1,21 @@
-import Nav from "../components/Nav";
-import dbConnect from "../utils/dbConnect";
+import Nav from "@/components/Nav";
+import dbConnect from "@/utils/dbConnect";
 
-const Index = () => {
+const Index = ({ snippets }) => {
   return (
-    <div>
-      <h1>List all code snippets according to search query</h1>
-    </div>
+    <>
+      {snippets}
+      <div>
+        <h1>List all code snippets according to search query</h1>
+      </div>
+    </>
   )
 }
 
 export async function getServerSideProps(context) {
   await dbConnect()
+
+  return { props: { snippets: [] } }
 }
 
 export default Index

@@ -1,5 +1,5 @@
-import dbConnect from "../../utils/dbConnect";
-import Code from "../../models/Code";
+import dbConnect from "@/utils/dbConnect";
+import Code from "@/models/Code";
 
 export default async (req, res) => {
   const { imageUrl, tag, description } = req.body

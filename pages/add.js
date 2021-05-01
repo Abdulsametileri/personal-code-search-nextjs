@@ -1,12 +1,12 @@
 import Form from 'react-bootstrap/Form'
-import styles from '../styles/Add.module.scss'
-import Spacer from "../components/Spacer";
+import styles from '@/styles/Add.module.scss'
+import Spacer from "@/components/Spacer";
 import {useForm} from "react-hook-form";
-import CustomFileInput from "../components/CustomFileInput";
-import CustomTextArea from "../components/CustomTextArea";
-import {AddCodeSnippetToDb, UploadCodeImageToS3} from "../api/codeSnippet";
-import {ShowErrorMessage, ShowSuccessMessage} from "../utils/messageBox";
-import ActionButton from "../components/ActionButton";
+import CustomFileInput from "@/components/CustomFileInput";
+import CustomTextArea from "@/components/CustomTextArea";
+import {AddCodeSnippetToDb, UploadCodeImageToS3} from "@/api/codeSnippet";
+import {ShowErrorMessage, ShowSuccessMessage} from "@/utils/messageBox";
+import ActionButton from "@/components/ActionButton";
 
 const add = () => {
   const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm();
