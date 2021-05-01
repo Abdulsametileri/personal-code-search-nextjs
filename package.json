@@ -11,6 +11,7 @@
     "aws-sdk": "^2.896.0",
     "bootstrap": "^5.0.0-beta3",
     "formidable": "^1.2.2",
+    "formidable-serverless": "^1.1.1",
     "mongoose": "^5.12.7",
     "next": "^10.2.0",
     "react": "^17.0.2",

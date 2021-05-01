@@ -1,11 +1,9 @@
 export const UploadCodeImageToS3 = async (file) => {
-  const filename = encodeURIComponent(file.name)
-
   const formData = new FormData()
   formData.append("file", file)
 
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/uploadSnippetToS3?fileName=${filename}`
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/uploadSnippetToS3`
     const res  = await fetch(url, {
       method: 'POST',
       body: formData,
