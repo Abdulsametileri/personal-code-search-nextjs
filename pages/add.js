@@ -8,10 +8,57 @@ import {AddCodeSnippetToDb, UploadCodeImageToS3} from "@/api/codeSnippet";
 import {ShowErrorMessage, ShowSuccessMessage} from "@/utils/messageBox";
 import ActionButton from "@/components/ActionButton";
 import { useRouter } from 'next/router'
+import {useEffect, useState} from "react";
+import firebase from "firebase";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import Button from "react-bootstrap/Button";
+
+const uiConfig = {
+  signInFlow: 'popup',
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+  ],
+  callbacks: {
+    // Avoid redirects after sign-in.
+    signInSuccessWithAuthResult: () => false,
+  },
+};
 
 const add = () => {
   const router = useRouter()
+  const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
   const {register, handleSubmit, reset, formState: {errors, isSubmitting}} = useForm();
+
+  useEffect(() => {
+    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const allowedEmails = process.env.NEXT_PUBLIC_ALLOW_EMAILS.split(',')
+
+        if (allowedEmails.includes(user.email)){
+          setIsSignedIn(true);
+        } else {
+          setIsSignedIn(false);
+          ShowErrorMessage("You cannot access this page. You must add your email. Sorry.")
+          firebase.auth().signOut()
+          setTimeout(() => {
+            router.reload()
+          }, 2000)
+        }
+      }
+    });
+    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+  }, []);
+
+  if (!isSignedIn) {
+    return (
+      <div>
+        <h1>Personal Code Search</h1>
+        <p>In order to add questions/solutions on your own, Please sign-in:</p>
+        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+      </div>
+    );
+  }
+
 
   const onSubmit = async data => {
     const imageS3Url = await UploadCodeImageToS3(data.image[0]) // await uploadCodeSnippetToS3ReturnUrl(data.image[0])
@@ -39,6 +86,7 @@ const add = () => {
     <Form className={styles.formContainer}
           onReset={reset}
           onSubmit={handleSubmit(onSubmit)}>
+
       <h3 className="text-center my-2">Add Code Snippet</h3>
 
       <CustomFileInput
@@ -79,6 +127,14 @@ const add = () => {
           disabledState={isSubmitting}
           buttonText="Add"
         />
+      </div>
+
+      <div className="w-100 mt-3">
+        <p className="mb-0">
+          <Button variant="danger" onClick={() => firebase.auth().signOut().then(() => router.reload())}>Sign-out</Button>
+          {' '}
+          You are signed as {firebase.auth().currentUser.displayName}! If you exit
+        </p>
       </div>
     </Form>
   )

@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Link from 'next/link'
+import Button from "react-bootstrap/Button";
 
 const NavComponent = () => {
   return (

@@ -43,7 +43,7 @@ export async function getServerSideProps() {
   await dbConnect()
 
   const result = await Code.find({})
-    .sort({"_id": -1}) // -1 mean descending order
+    .sort({"_id": -1}) // -1 mean descending order (created_at)
 
   const allSnippets = result.map((doc) => {
     const snippet = doc.toObject()
