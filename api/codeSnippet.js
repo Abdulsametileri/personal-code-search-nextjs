@@ -16,6 +16,18 @@ export const UploadCodeImageToS3 = async (file) => {
   }
 }
 
+export const SearchInCodeSnippetList = async (keyword) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/searchCodeSnippets?keyword=${keyword}`
+    const response = await fetch(url)
+    const res = await response.json()
+    return res
+  } catch (e) {
+    console.error(e)
+    return []
+  }
+}
+
 export const AddCodeSnippetToDb = async (data) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/addCodeSnippet`

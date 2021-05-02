@@ -5,9 +5,8 @@ const DebounceSearch = ({className, onChange}) => {
   return (
     <DebounceInput
       className={className}
-      minLength={3}
       placeholder="Search..."
-      debounceTimeout={1000}
+      debounceTimeout={process.env.NODE_ENV === 'development' ? 100 : 1000}
       onChange={onChange}/>
   )
 }

@@ -1,15 +1,20 @@
 import dbConnect from "@/utils/dbConnect";
 import Code from "@/models/Code";
-import React from "react";
+import React, {useState} from "react";
 import indexStyles from '@/styles/Index.module.scss'
 import DebounceSearch from "@/components/DebounceSearch";
 import SnippetList from "@/components/SnippetList";
 import Spacer from "@/components/Spacer";
 import {SearchInCodeSnippetList} from "@/api/codeSnippet";
 
-const Index = ({snippets}) => {
+const Index = ({allSnippets}) => {
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [searchResults, setSearchResults] = useState([])
+
   const search = async (keyword) => {
-    await SearchInCodeSnippetList(keyword)
+    setSearchKeyword(keyword)
+    let res = await SearchInCodeSnippetList(keyword)
+    setSearchResults(res)
   }
 
   return (
@@ -24,9 +29,11 @@ const Index = ({snippets}) => {
       <Spacer bottomVal={25}/>
 
       {
-        snippets.length == 0
-          ? 'There is no code snippet to show.'
-          : <SnippetList snippets={snippets}/>
+        allSnippets.length == 0
+          ? <p className="text-center">'There is no code snippet to show.'</p>
+          : <SnippetList snippets={
+            searchKeyword === "" ? allSnippets : searchResults
+          }/>
       }
     </>
   )
@@ -36,15 +43,15 @@ export async function getServerSideProps() {
   await dbConnect()
 
   const result = await Code.find({})
-    .sort({"_id":-1}) // -1 mean descending order
+    .sort({"_id": -1}) // -1 mean descending order
 
-  const snippets = result.map((doc) => {
+  const allSnippets = result.map((doc) => {
     const snippet = doc.toObject()
     snippet._id = snippet._id.toString()
     return snippet
   })
 
-  return {props: {snippets}}
+  return {props: {allSnippets}}
 }
 
 export default Index
