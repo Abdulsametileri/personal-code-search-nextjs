@@ -18,7 +18,8 @@ export default async (req, res) => {
     res.status(200).json({
       codeSnippets,
       curPage: curPage,
-      maxPage: Math.ceil(totalCodeSnippets / perPage)
+      maxPage: Math.ceil(totalCodeSnippets / perPage),
+      totalCodeSnippets
     })
   } catch (err) {
     res.status(400).json({err})

@@ -6,8 +6,11 @@ import Spacer from "@/components/Spacer";
 import {PaginateCodeSnippetList, SearchInCodeSnippetList} from "@/api/codeSnippet";
 import ReactPaginate from "react-paginate"
 import {useRouter} from "next/router";
+import Code from 'models/Code'
+import data from './data.json'
+import dbConnect from "@/utils/dbConnect";
 
-const Index = ({curPage, maxPage, codeSnippets}) => {
+const Index = ({totalCodeSnippets, curPage, maxPage, codeSnippets}) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResults, setSearchResults] = useState([])
   const router = useRouter()
@@ -30,6 +33,7 @@ const Index = ({curPage, maxPage, codeSnippets}) => {
 
   return (
     <>
+      {totalCodeSnippets}
       <div className={indexStyles.searchContainer}>
         <DebounceSearch
           className={indexStyles.debounceInput}
@@ -72,13 +76,16 @@ const Index = ({curPage, maxPage, codeSnippets}) => {
   )
 }
 
-let loadData = true
+let loadInitialData = true
 
 export async function getServerSideProps({query}) {
-  /*if (loadData) {
-    await Code.create(data)
-    loadData = false
-  }*/
+  if (loadInitialData) {
+    await dbConnect()
+    await Code.create(data, {
+      wtimeout: 999999999
+    })
+    loadInitialData = false
+  }
   const page = query.page || 1
 
   const res = await PaginateCodeSnippetList(page)

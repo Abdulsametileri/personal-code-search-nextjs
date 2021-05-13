@@ -17,7 +17,6 @@ const CodeSchema = new mongoose.Schema({
   description: {
     /* Snippet description to understand better */
     type: String,
-    required: [true, 'Description can\'t be empty']
   },
 })
 
