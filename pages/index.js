@@ -6,34 +6,34 @@ import Spacer from "@/components/Spacer";
 import {PaginateCodeSnippetList, SearchInCodeSnippetList} from "@/api/codeSnippet";
 import ReactPaginate from "react-paginate"
 import {useRouter} from "next/router";
-import Code from 'models/Code'
-import data from './data.json'
-import dbConnect from "@/utils/dbConnect";
 
 const Index = ({totalCodeSnippets, curPage, maxPage, codeSnippets}) => {
-  const [searchKeyword, setSearchKeyword] = useState('');
-  const [searchResults, setSearchResults] = useState([])
   const router = useRouter()
 
   const search = async (keyword) => {
-    setSearchKeyword(keyword)
-    let res = await SearchInCodeSnippetList(keyword)
-    setSearchResults(res)
+    const query = router.query
+    query.page = 1
+    query.keyword = keyword
+    pushNewState(query)
   }
 
   const handlePagination = page => {
-    const path = router.pathname
     const query = router.query
     query.page = page.selected + 1
+    pushNewState(query)
+  }
+
+  const pushNewState = (query) => {
     router.push({
-      pathname: path,
+      pathname: router.pathname,
       query: query,
     })
   }
 
   return (
     <>
-      {totalCodeSnippets}
+      <h3 className="text-center">Total Code Snippets : {totalCodeSnippets}</h3>
+
       <div className={indexStyles.searchContainer}>
         <DebounceSearch
           className={indexStyles.debounceInput}
@@ -47,49 +47,41 @@ const Index = ({totalCodeSnippets, curPage, maxPage, codeSnippets}) => {
         codeSnippets.length == 0
           ? <p className="text-center">'There is no code snippet to show.'</p>
           : <>
-            <SnippetList snippets={
-              searchKeyword === "" ? codeSnippets : searchResults
-            }/>
-            <ReactPaginate
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              previousLabel={"previous"}
-              nextLabel={"next"}
-              breakLabel={"..."}
-              initialPage={curPage - 1}
-              pageCount={maxPage}
-              onPageChange={handlePagination}
-              breakClassName={'page-item'}
-              breakLinkClassName={'page-link'}
-              containerClassName={'pagination w-100 justify-content-center'}
-              pageClassName={'page-item'}
-              pageLinkClassName={'page-link'}
-              previousClassName={'page-item'}
-              previousLinkClassName={'page-link'}
-              nextClassName={'page-item'}
-              nextLinkClassName={'page-link'}
-              activeClassName={'active'}
-            />
+              <SnippetList snippets={
+                codeSnippets
+              }/>
+              <ReactPaginate
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                initialPage={curPage - 1}
+                pageCount={maxPage}
+                onPageChange={handlePagination}
+                breakClassName={'page-item'}
+                breakLinkClassName={'page-link'}
+                containerClassName={'pagination w-100 justify-content-center'}
+                pageClassName={'page-item'}
+                pageLinkClassName={'page-link'}
+                previousClassName={'page-item'}
+                previousLinkClassName={'page-link'}
+                nextClassName={'page-item'}
+                nextLinkClassName={'page-link'}
+                activeClassName={'active'}
+              />
           </>
       }
     </>
   )
 }
 
-let loadInitialData = true
 
 export async function getServerSideProps({query}) {
-  if (loadInitialData) {
-    await dbConnect()
-    await Code.create(data, {
-      wtimeout: 999999999
-    })
-    loadInitialData = false
-  }
   const page = query.page || 1
+  const keyword = query.keyword || ""
 
-  const res = await PaginateCodeSnippetList(page)
-  console.log(res)
+  const res = await PaginateCodeSnippetList(page, keyword)
 
   return {props: res}
 }

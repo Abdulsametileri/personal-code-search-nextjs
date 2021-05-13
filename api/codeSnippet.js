@@ -16,21 +16,9 @@ export const UploadCodeImageToS3 = async (file) => {
   }
 }
 
-export const SearchInCodeSnippetList = async (keyword) => {
+export const PaginateCodeSnippetList = async (page, keyword) => {
   try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/searchCodeSnippets?keyword=${keyword}`
-    const response = await fetch(url)
-    const res = await response.json()
-    return res
-  } catch (e) {
-    console.error(e)
-    return []
-  }
-}
-
-export const PaginateCodeSnippetList = async (page) => {
-  try {
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/paginateCodeSnippets?page=${page}`
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/paginateCodeSnippets?page=${page}&keyword=${keyword}`
     const response = await fetch(url)
     return await response.json()
   } catch (e) {

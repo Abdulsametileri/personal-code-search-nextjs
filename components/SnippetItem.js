@@ -9,7 +9,7 @@ import React from "react";
 const SnippetItem = ({snippet}) => {
   return (
     <Row>
-      <Col sm={12} md={{span: 10, offset: 1}}>
+      <Col sm={12} md={{span: 8, offset: 2}}>
         <Card className={snippetStyles.snippetContainer}>
           <Card.Body className="w-100">
             <Card.Title>{snippet.tag}</Card.Title>
