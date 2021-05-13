@@ -1,20 +1,31 @@
-import dbConnect from "@/utils/dbConnect";
-import Code from "@/models/Code";
 import React, {useState} from "react";
 import indexStyles from '@/styles/Index.module.scss'
 import DebounceSearch from "@/components/DebounceSearch";
 import SnippetList from "@/components/SnippetList";
 import Spacer from "@/components/Spacer";
-import {SearchInCodeSnippetList} from "@/api/codeSnippet";
+import {PaginateCodeSnippetList, SearchInCodeSnippetList} from "@/api/codeSnippet";
+import ReactPaginate from "react-paginate"
+import {useRouter} from "next/router";
 
-const Index = ({allSnippets}) => {
+const Index = ({curPage, maxPage, codeSnippets}) => {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResults, setSearchResults] = useState([])
+  const router = useRouter()
 
   const search = async (keyword) => {
     setSearchKeyword(keyword)
     let res = await SearchInCodeSnippetList(keyword)
     setSearchResults(res)
+  }
+
+  const handlePagination = page => {
+    const path = router.pathname
+    const query = router.query
+    query.page = page.selected + 1
+    router.push({
+      pathname: path,
+      query: query,
+    })
   }
 
   return (
@@ -29,29 +40,51 @@ const Index = ({allSnippets}) => {
       <Spacer bottomVal={25}/>
 
       {
-        allSnippets.length == 0
+        codeSnippets.length == 0
           ? <p className="text-center">'There is no code snippet to show.'</p>
-          : <SnippetList snippets={
-            searchKeyword === "" ? allSnippets : searchResults
-          }/>
+          : <>
+            <SnippetList snippets={
+              searchKeyword === "" ? codeSnippets : searchResults
+            }/>
+            <ReactPaginate
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              initialPage={curPage - 1}
+              pageCount={maxPage}
+              onPageChange={handlePagination}
+              breakClassName={'page-item'}
+              breakLinkClassName={'page-link'}
+              containerClassName={'pagination w-100 justify-content-center'}
+              pageClassName={'page-item'}
+              pageLinkClassName={'page-link'}
+              previousClassName={'page-item'}
+              previousLinkClassName={'page-link'}
+              nextClassName={'page-item'}
+              nextLinkClassName={'page-link'}
+              activeClassName={'active'}
+            />
+          </>
       }
     </>
   )
 }
 
-export async function getServerSideProps() {
-  await dbConnect()
+let loadData = true
 
-  const result = await Code.find({})
-    .sort({"_id": -1}) // -1 mean descending order (created_at)
+export async function getServerSideProps({query}) {
+  /*if (loadData) {
+    await Code.create(data)
+    loadData = false
+  }*/
+  const page = query.page || 1
 
-  const allSnippets = result.map((doc) => {
-    const snippet = doc.toObject()
-    snippet._id = snippet._id.toString()
-    return snippet
-  })
+  const res = await PaginateCodeSnippetList(page)
+  console.log(res)
 
-  return {props: {allSnippets}}
+  return {props: res}
 }
 
 export default Index

@@ -4,7 +4,10 @@ const CodeSchema = new mongoose.Schema({
   imageUrl: {
     /* The snippet image url of the specified code in s3 */
     type: String,
-    required: [true, 'Snippet image url can\'t be empty'],
+  },
+  rawText: {
+    /* The snippet raw text of the specified code */
+    type: String,
   },
   tag: {
     /* Snippet tag for searching purposes */

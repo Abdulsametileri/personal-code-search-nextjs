@@ -1,0 +1,50 @@
+[
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/Add+string+without+converting+int.png",
+    "rawText": "",
+    "tag": "string add",
+    "description": "String olarak verilen sayıları integer'e cast etmeden toplama işlemi yapabilme."
+  },
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/Add+two+numbers+via+hash+table.png",
+    "rawText": "",
+    "tag": "Hash table complement array",
+    "description": "Brute force yapmadan hash table kullanarak tek pass da twoSum bulma."
+  },
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/Add+two+numbers+via+hash+table+-+2.png",
+    "rawText": "",
+    "tag": "Hash table complement array",
+    "description": "Brute force yapmadan hash table kullanarak two passda twoSum bulma"
+  },
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/Generating+paranthesis+as+recursive.png",
+    "rawText": "",
+    "tag": "Recursive parantez array",
+    "description": "Recursive olarak parentez generate etme"
+  },
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/Reverse+int+.png",
+    "rawText": "",
+    "tag": "reverse int",
+    "description": "Verilen integer sayını matematiksel reversini tersini bulma"
+  },
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/Shuffle+integer+array.png",
+    "rawText": "",
+    "tag": "shuffle int array",
+    "description": "Verilen integer array'i shuffle yapma."
+  },
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/Sum+of+two+linked+list.png",
+    "rawText": "",
+    "tag": "Linked list sum",
+    "description": "Verilen iki linked listin toplamını bulma"
+  },
+  {
+    "imageUrl": "https://personalcodesearch.s3.eu-central-1.amazonaws.com/ZigZag+Pattern.png",
+    "rawText": "",
+    "tag": "Zigzag matrix",
+    "description": "Zigzag pattern'i basit boolean bir ifade ile oluşturabilme"
+  }
+]

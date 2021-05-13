@@ -4,11 +4,11 @@ export const UploadCodeImageToS3 = async (file) => {
 
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/uploadSnippetToS3`
-    const res  = await fetch(url, {
+    const res = await fetch(url, {
       method: 'POST',
       body: formData,
     });
-    const { imageUrl } = await res.json()
+    const {imageUrl} = await res.json()
     return imageUrl
   } catch (e) {
     console.error(e)
@@ -28,6 +28,22 @@ export const SearchInCodeSnippetList = async (keyword) => {
   }
 }
 
+export const PaginateCodeSnippetList = async (page) => {
+  try {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/paginateCodeSnippets?page=${page}`
+    const response = await fetch(url)
+    return await response.json()
+  } catch (e) {
+    console.error(e)
+  }
+
+  return {
+    codeSnippets: [],
+    maxPage: 1,
+    curPage: 1
+  }
+}
+
 export const AddCodeSnippetToDb = async (data) => {
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/addCodeSnippet`
@@ -38,7 +54,7 @@ export const AddCodeSnippetToDb = async (data) => {
       method: 'POST',
       body: JSON.stringify(data),
     })
-    const { success } = await response.json()
+    const {success} = await response.json()
     return success
   } catch (e) {
     console.error(e)

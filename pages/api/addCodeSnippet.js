@@ -2,13 +2,14 @@ import dbConnect from "@/utils/dbConnect";
 import Code from "@/models/Code";
 
 export default async (req, res) => {
-  const { imageUrl, tag, description } = req.body
+  const { imageUrl, rawText, tag, description } = req.body
 
   await dbConnect()
 
   try {
     const addedCode = await Code.create({
       imageUrl,
+      rawText,
       tag,
       description
     })
