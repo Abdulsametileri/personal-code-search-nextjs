@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import indexStyles from '@/styles/Index.module.scss'
 import DebounceSearch from "@/components/DebounceSearch";
 import SnippetList from "@/components/SnippetList";
 import Spacer from "@/components/Spacer";
-import {PaginateCodeSnippetList, SearchInCodeSnippetList} from "@/api/codeSnippet";
+import {PaginateCodeSnippetList} from "@/api/codeSnippet";
 import ReactPaginate from "react-paginate"
 import {useRouter} from "next/router";
 
@@ -52,16 +52,16 @@ const Index = ({totalCodeSnippets, curPage, maxPage, codeSnippets}) => {
               }/>
               <ReactPaginate
                 marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                previousLabel={"previous"}
-                nextLabel={"next"}
+                pageRangeDisplayed={3}
+                previousLabel={"Pre"}
+                nextLabel={"Next"}
                 breakLabel={"..."}
                 initialPage={curPage - 1}
                 pageCount={maxPage}
                 onPageChange={handlePagination}
                 breakClassName={'page-item'}
                 breakLinkClassName={'page-link'}
-                containerClassName={'pagination w-100 justify-content-center'}
+                containerClassName={'pagination w-100 justify-content-center overflow-scroll'}
                 pageClassName={'page-item'}
                 pageLinkClassName={'page-link'}
                 previousClassName={'page-item'}
