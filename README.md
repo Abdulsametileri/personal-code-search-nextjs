@@ -7,6 +7,14 @@ solutions. Sometimes you want to remember the code snippets seen before.
 
 **This project may give you a solution.**
 
+### Tech Stack
+
+- Next js
+- Firebase Authentication (Gmail)
+- Heroku
+- MongoDB Atlas (Mongoose for ORM)
+- Amazon S3
+
 ### Demo
 
 All snippets in the site uploaded by me. Possibly you don't interested in.
@@ -22,13 +30,10 @@ You can use pagination functionality at the bottom of the page.
 **You cannot add the code snippet with `Add Code Snippets` link because 
 you don't have authentication. This is just a demo for you.** 
 
-### Tech Stack
+`Add Code Snippets` is a basic post page. This is what its look like.
+![](images/addCodeSnippet.png)
 
-- Next js
-- Firebase Authentication (Gmail)
-- Heroku
-- MongoDB Atlas (Mongoose for ORM)
-- Amazon S3
+### Build on your own
 
 You can follow to `.env.example` set your own credentials.
 
@@ -91,6 +96,7 @@ If you want to upload the code as `rawText` not the image you can leave blank th
 `imageUrl` and fill `rawText`.
 
 You can look the paginaton and filtering at pages/api/paginateCodeSnippets.js
+
 ``` javascript
 let filter = {}
 
