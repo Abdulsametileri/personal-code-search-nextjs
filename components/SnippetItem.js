@@ -18,9 +18,11 @@ const SnippetItem = ({snippet}) => {
             {snippet.rawText && <p style={{whiteSpace: "pre-wrap"}}>
               {snippet.rawText}
             </p>}
-            {snippet.imageUrl && <Link href={snippet.imageUrl}>
+            {snippet.imageUrl && <Link
+              href={'https://d1kvz0r50h32xh.cloudfront.net' + snippet.imageUrl.substr(snippet.imageUrl.lastIndexOf("/"))}>
               <a target="_blank">
-                <Card.Img variant="bottom" src={snippet.imageUrl}/>
+                <Card.Img variant="bottom"
+                          src={'https://d1kvz0r50h32xh.cloudfront.net' + snippet.imageUrl.substr(snippet.imageUrl.lastIndexOf("/"))}/>
               </a>
             </Link>}
           </Card.Body>

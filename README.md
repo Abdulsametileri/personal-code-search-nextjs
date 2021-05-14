@@ -13,7 +13,7 @@ solutions. Sometimes you want to remember the code snippets seen before.
 - Firebase Authentication (Gmail)
 - Heroku
 - MongoDB Atlas (Mongoose for ORM)
-- Amazon S3
+- Amazon S3 (via CloudFront)
 
 ### Demo
 
