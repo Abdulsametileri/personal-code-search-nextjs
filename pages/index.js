@@ -47,29 +47,29 @@ const Index = ({totalCodeSnippets, curPage, maxPage, codeSnippets}) => {
         codeSnippets.length == 0
           ? <p className="text-center">'There is no code snippet to show.'</p>
           : <>
-              <SnippetList snippets={
-                codeSnippets
-              }/>
-              <ReactPaginate
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={3}
-                previousLabel={"Pre"}
-                nextLabel={"Next"}
-                breakLabel={"..."}
-                initialPage={curPage - 1}
-                pageCount={maxPage}
-                onPageChange={handlePagination}
-                breakClassName={'page-item'}
-                breakLinkClassName={'page-link'}
-                containerClassName={'pagination w-100 justify-content-center overflow-scroll'}
-                pageClassName={'page-item'}
-                pageLinkClassName={'page-link'}
-                previousClassName={'page-item'}
-                previousLinkClassName={'page-link'}
-                nextClassName={'page-item'}
-                nextLinkClassName={'page-link'}
-                activeClassName={'active'}
-              />
+            <SnippetList snippets={
+              codeSnippets
+            }/>
+            <ReactPaginate
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              previousLabel={"Pre"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              initialPage={curPage - 1}
+              pageCount={maxPage}
+              onPageChange={handlePagination}
+              breakClassName={'page-item'}
+              breakLinkClassName={'page-link'}
+              containerClassName={'pagination w-100 justify-content-center overflow-scroll'}
+              pageClassName={'page-item'}
+              pageLinkClassName={'page-link'}
+              previousClassName={'page-item'}
+              previousLinkClassName={'page-link'}
+              nextClassName={'page-item'}
+              nextLinkClassName={'page-link'}
+              activeClassName={'active'}
+            />
           </>
       }
     </>
