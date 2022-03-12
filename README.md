@@ -117,3 +117,8 @@ const codeSnippets = await Code.find(filter)
   .sort({"_id": -1})
 ```
 
+Run continiously
+```sleep
+for i in {1..100}; do echo $i && curl "https://personal-code-search.herokuapp.com/" >> /tmp/output.log && sleep 300; done
+```
+
